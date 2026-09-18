@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lash Cost Per Set Calculator</title>
+<meta name="description" content="Work out what a full set of lash extensions actually costs you — adhesive, trays, waste and chair time — and what you need to charge to hit your margin.">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="wrap">
+
+<header><a class="home" href="/">← Trade Tools</a></header>
+
+<h1>Lash cost per set calculator</h1>
+<p class="sub">What a full set actually costs you once adhesive, trays, waste and chair time are counted — and what you need to charge to keep the margin you want.</p>
+
+<div class="card">
+  <div class="grid2">
+    <div class="field">
+      <label for="trayCost">Lash tray cost
+        <span class="hint">Price of one tray</span>
+      </label>
+      <input type="number" id="trayCost" value="6.50" min="0" step="0.01">
+    </div>
+    <div class="field">
+      <label for="traysPerSet">Trays used per set
+        <span class="hint">Fractions are fine</span>
+      </label>
+      <input type="number" id="traysPerSet" value="0.75" min="0" step="0.05">
+    </div>
+    <div class="field">
+      <label for="adhesiveCost">Adhesive bottle cost</label>
+      <input type="number" id="adhesiveCost" value="38" min="0" step="0.01">
+    </div>
+    <div class="field">
+      <label for="setsPerBottle">Sets per bottle
+        <span class="hint">Before it's discarded</span>
+      </label>
+      <input type="number" id="setsPerBottle" value="22" min="1" step="1">
+    </div>
+    <div class="field">
+      <label for="disposables">Disposables per set
+        <span class="hint">Pads, tape, wands, brushes</span>
+      </label>
+      <input type="number" id="disposables" value="3.25" min="0" step="0.01">
+    </div>
+    <div class="field">
+      <label for="wastePct">Waste allowance
+        <span class="hint">% of product lost — fans, drops, dry-out</span>
+      </label>
+      <input type="number" id="wastePct" value="12" min="0" max="100" step="1">
+    </div>
+    <div class="field">
+      <label for="chairHours">Chair time (hours)
+        <span class="hint">Including setup and turnaround</span>
+      </label>
+      <input type="number" id="chairHours" value="2.5" min="0.25" step="0.25">
+    </div>
+    <div class="field">
+      <label for="overheadMonth">Monthly overhead
+        <span class="hint">Booth rent, insurance, software, marketing</span>
+      </label>
+      <input type="number" id="overheadMonth" value="750" min="0" step="10">
+    </div>
+    <div class="field">
+      <label for="setsPerMonth">Sets per month
+        <span class="hint">Realistic, not best case</span>
+      </label>
+      <input type="number" id="setsPerMonth" value="42" min="1" step="1">
+    </div>
+    <div class="field">
+      <label for="targetMargin">Target profit margin
+        <span class="hint">% of the price you keep</span>
+      </label>
+      <input type="number" id="targetMargin" value="45" min="0" max="95" step="1">
+    </div>
+  </div>
+</div>
+
+<div class="results card" style="margin-top:1rem">
+  <div class="row"><span class="k">Lash product</span><span class="v" id="rTray">—</span></div>
+  <div class="row"><span class="k">Adhesive</span><span class="v" id="rGlue">—</span></div>
+  <div class="row"><span class="k">Disposables</span><span class="v" id="rDisp">—</span></div>
+  <div class="row"><span class="k">Waste allowance</span><span class="v" id="rWaste">—</span></div>
+  <div class="row"><span class="k"><strong>Product cost per set</strong></span><span class="v" id="rProduct">—</span></div>
+  <div class="row"><span class="k">Overhead absorbed per set</span><span class="v" id="rOverhead">—</span></div>
+  <div class="row"><span class="k"><strong>True cost per set</strong></span><span class="v" id="rTotal">—</span></div>
+
+  <div class="headline">
+    <div class="k">Price needed for your target margin</div>
+    <div class="v" id="rPrice">—</div>
+    <div class="note" id="rNote">—</div>
+  </div>
+</div>
+
+<h2>How this is calculated</h2>
+<div class="prose">
+  <p>Most pricing advice stops at the tray and the glue. That undercounts badly, in two places.</p>
+  <p><strong>Waste is a real cost.</strong> Fans you discard, adhesive that cures on the jade stone, trays that dry out before they're finished. A 10–15% allowance is normal and pretending it's zero means every set quietly loses you money.</p>
+  <p><strong>Overhead has to land somewhere.</strong> Booth rent doesn't care how many sets you do. Dividing monthly overhead by realistic monthly sets — not your best month — gives you the amount each set has to carry. This is the number that decides whether a full book is profitable or just busy.</p>
+  <p>The target price then works backwards from margin rather than marking up cost: <strong>price = true cost ÷ (1 − margin)</strong>. A 45% margin means the price must be about 1.8× your cost, not 1.45×. Marking up by the margin percentage is the single most common pricing error in service businesses, and it leaves you short every time.</p>
+  <p>Your rate for chair time is deliberately not an input here. It isn't a cost — it's what's left after costs, and that's exactly what the hourly figure below tells you.</p>
+</div>
+
+<a class="cta" href="#">
+  <div class="t">Track this across a whole year →</div>
+  <div class="d">The workbook version keeps a log of every set, tracks product usage against what you actually bought, and shows your real margin per month. Excel and Google Sheets.</div>
+</a>
+
+<footer>
+  <p>This calculator is a planning tool, not financial advice. Check the numbers against your own records before setting prices.</p>
+  <p>Nothing you type here leaves your browser. There is no tracking on this page.</p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var ids = ['trayCost','traysPerSet','adhesiveCost','setsPerBottle','disposables',
+             'wastePct','chairHours','overheadMonth','setsPerMonth','targetMargin'];
+
+  var money = function (n) {
+    return (n < 0 ? '-$' : '$') + Math.abs(n).toFixed(2);
+  };
+
+  function val(id) {
+    var n = parseFloat(document.getElementById(id).value);
+    return isFinite(n) ? n : 0;
+  }
+
+  function calc() {
+    var tray       = val('trayCost') * val('traysPerSet');
+    var glue       = val('setsPerBottle') > 0 ? val('adhesiveCost') / val('setsPerBottle') : 0;
+    var disposable = val('disposables');
+
+    var consumables = tray + glue + disposable;
+    var waste       = consumables * (val('wastePct') / 100);
+    var product     = consumables + waste;
+
+    var sets     = Math.max(val('setsPerMonth'), 1);
+    var overhead = val('overheadMonth') / sets;
+    var total    = product + overhead;
+
+    var margin = Math.min(Math.max(val('targetMargin'), 0), 95) / 100;
+    var price  = total / (1 - margin);
+
+    var hours    = Math.max(val('chairHours'), 0.25);
+    var perHour  = (price - total) / hours;
+
+    document.getElementById('rTray').textContent     = money(tray);
+    document.getElementById('rGlue').textContent     = money(glue);
+    document.getElementById('rDisp').textContent     = money(disposable);
+    document.getElementById('rWaste').textContent    = money(waste);
+    document.getElementById('rProduct').textContent  = money(product);
+    document.getElementById('rOverhead').textContent = money(overhead);
+    document.getElementById('rTotal').textContent    = money(total);
+    document.getElementById('rPrice').textContent    = money(price);
+
+    document.getElementById('rNote').textContent =
+      money(price - total) + ' profit per set · ' + money(perHour) + ' per chair hour · ' +
+      money((price - total) * sets) + ' a month at ' + sets + ' sets';
+  }
+
+  ids.forEach(function (id) {
+    document.getElementById(id).addEventListener('input', calc);
+  });
+
+  calc();
+})();
+</script>
+</body>
+</html>
